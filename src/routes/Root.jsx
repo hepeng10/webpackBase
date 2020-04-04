@@ -19,7 +19,7 @@ const Root = () => {
                                     key={route.name}
                                     path={route.path}
                                     exact
-                                    component={lazyLoad(route)}
+                                    component={route.component}
                                     // render={(props) => {
                                     //     const Comp = lazyLoad(route);
                                     //     return <Comp {...props} />

@@ -31,7 +31,7 @@ export default class Test extends Component {
         return (
             <div className={styles.container}>
                 <span>{this.state.a}</span>
-                <p>123</p>
+                <p>1111</p>
                 <Suspense fallback={<div>loading</div>}>
                     <LazyComp />
                 </Suspense>
