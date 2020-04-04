@@ -76,6 +76,6 @@ export default webpackMerge(baseConfig, {
         disableHostCheck: true,
         compress: true,     // 开起 gzip 压缩
         contentBase: path.join(__dirname, 'build'),
-        proxy: devProxy()
+        proxy: devProxy(),  // 代理要和 axios 发起请求的地址进行对应
     }
 });

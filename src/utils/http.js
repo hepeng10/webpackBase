@@ -140,13 +140,31 @@ export default function http(args) {
                 url = `/mock/${url}`;
             }
         } else {
-            // 开发环境中，要通过 webpack-dev-server 的 proxy 来请求其它域名，而不是直接请求，那样会出现跨域问题
-            // 则需要将 domain 和 url 拼接为 url
-            // 并且清除 domain 加上 /，因为有 domain 或者不是以 / 开头，axios 就会直接发起对 domain 的请求而不会通过 proxy 代理
-            // 这里把 domain 放到 url 里，然后在 proxy 里配置，将这个 domain 通过 proxy 进行代理
+            // 开发环境 domain 有3种情况：
+            // 1、项目部署服务器的 domain
+            // 2、其它服务器需要 webpack-dev-server 代理的 domain
+            // 3、其它服务器不需要 webpack-dev-server 代理的 domain
+            /*
+            开发环境中，要通过 webpack-dev-server 的 proxy 来请求其它域名，而不是直接请求，那样会出现跨域问题
+            则需要将 domain 和 url 拼接为 url
+            并且清除 domain 加上 /，因为有 domain 或者不是以 / 开头，axios 就会直接发起对 domain 的请求而不会通过 proxy 代理
+            这里把 domain 放到 url 里，然后在 proxy 里配置，将这个 domain 通过 proxy 进行代理
+            */
             if (domain) {
-                url = `/${domain}/${url}`;  // 前面加了 / 才是请求 webpack-dev-server 启动的服务器
-                domain = null;
+                // 是否需要通过 webpack-dev-server 代理
+                let isProxy = false;
+                for (let k in Config.Server) {
+                    if (Config.Server[k].includes(domain)) {
+                        isProxy = true;
+                    }
+                }
+
+                if (isProxy) {
+                    url = `/${domain}/${url}`;  // 前面加了 / 才是请求 webpack-dev-server 启动的服务器
+                    domain = null;
+                } else {
+                    url = `/${url}`;
+                }
             } else {
                 const domain = Config.Server.local;
                 url = `/${domain}/${url}`;
