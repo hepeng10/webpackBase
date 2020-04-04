@@ -1,0 +1,105 @@
+.btn(@bgc, @c: white) {
+    background-color: @bgc;
+    border: 1px solid transparent;
+    color: @c;
+}
+:global {
+    .btn {
+        display: inline-block;
+        height: 36px;
+        line-height: 36px;
+        border: 1px solid #e7ebee;
+        border-radius: 4px;
+        font-size: 14px;
+        text-align: center;
+        background-color: white;
+        color: #8999ab;
+        padding: 0 10px;
+        outline: 0;
+        cursor: pointer;
+        &:hover {
+            background-color: #FAFAFA;
+        }
+    }
+    .btn-opacity {
+        .btn(rgba(0, 0, 0, 0));
+        border: 1px solid #329cd5;
+        &:hover {
+            background-color: rgba(0, 0, 0, .3);
+        }
+    }
+    .btn-blue {
+        .btn(#1890FF);
+        &:hover {
+            background-color: #1080EE;
+        }
+    }
+    .btn-blueLight {
+        .btn(#52c3f1);
+        &:hover {
+            background-color: #4db8e3;
+        }
+    }
+    .btn-blueDark {
+        .btn(#032485);
+        &:hover {
+            background-color: #214c85;
+        }
+    }
+    .btn-blueSky {
+        .btn(#1dace8);
+        &:hover {
+            background-color: #1694d4;
+        }
+    }
+    .btn-red {
+        .btn(#ff6b61);
+        &:hover {
+            background-color: #ff7a71;
+        }
+    }
+    .btn-orange {
+        .btn(#ff871d);
+        &:hover {
+            background-color: #ff9334;
+        }
+    }
+    .btn-green {
+        .btn(#29d2b8);
+        &:hover {
+            background-color: #3fd7bf;
+        }
+    }
+    .btn-gray {
+        .btn(#e4e9ee, #456);
+        &:hover {
+            background-color: #cdd1d6;
+        }
+    }
+    .btn-grayLight {
+        .btn(#cacfd5, #fff);
+        &:hover {
+            background-color: #b3b8bd;
+        }
+    }
+    .btn-select {
+        .btn(white, #456);
+        border: 1px solid #d0d8df;
+        box-sizing: border-box;
+        &:hover {
+            background-color: #d0d8df;
+            color: white;
+        }
+    }
+    .btn-active {
+        .btn(#2d96c9);
+        &:hover {
+            background-color: #2d96c9;
+            color: white;
+        }
+    }
+    .btn-disabled {
+        .btn(#CBCFD5, #456);
+        cursor: not-allowed;
+    }
+}

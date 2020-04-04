@@ -1,0 +1,141 @@
+/**
+ * 网站基础样式, 一般不用调整
+ */
+@import "./common";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    background: #eff3f6;
+}
+p, h1, h2, h3, h4, h5, h6 {
+    line-height: 1;
+}
+body, button, input, select, textarea {
+    font: 14px/1.5 "Microsoft Yahei", "PingFang SC", Helvetica, Arial, Simsun, sans-serif !important;
+}
+html body {
+    font-size: 14px;
+}
+
+input {
+    border: 0;
+    border-radius: 4px;
+    outline: none;
+}
+
+input::placeholder {
+    color:  #AEBAC6;
+}
+// 去除 chrome 上保存密码的 input 框的屎黄色背景
+input:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+img {
+    border-style: none;
+    box-sizing: border-box;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+a {
+    color: inherit;
+}
+
+:global {
+    .red {
+        color: red;
+    }
+    .click {
+        color: #06c;
+        cursor: pointer;
+    }
+    .status {
+        color: #03afff;
+    }
+    .revoke {
+        color: #f36a5a;
+    }
+    .clear:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+    .hide {
+        display: none !important;
+    }
+    .pointer {
+        cursor: pointer;
+    }
+    .c-i {
+        color: inherit;
+    }
+
+    .container {
+        position: relative;
+        width: @containerW;
+        margin: 0 auto;
+
+        a {
+            color: inherit;
+        }
+    }
+
+    .lineInput {
+        position: relative;
+        .icon {
+            margin-right: -16px;
+            position: relative;
+            background-color: #fff;
+            left: 4px;
+            top: -2px;
+            z-index: 10;
+        }
+        .input {
+            width: 350px;
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid #D8D8D8 !important;
+            box-shadow: none !important;
+            text-indent: 20px;
+            height: 40px;
+            font-size: 14px;
+            background: none;
+            input{
+                border: 0;
+            }
+        }
+    }
+
+    .table {
+        width: 100%;
+        border: 1px solid #E8EEF3;
+        tr {
+            td {
+                .height(40px);
+                text-align: center;
+                &:nth-of-type(2n - 1) {
+                    background: #ECF0F4;
+                }
+            }
+            &:nth-of-type(2n) {
+                td:nth-of-type(2n) {
+                    background-color: #F8FAFB;
+                }
+                td:nth-of-type(2n - 1) {
+                    background-color: #DEE6EE;
+                }
+            }
+        }
+    }
+}
