@@ -3,25 +3,31 @@ import { Switch, Route, HashRouter, BrowserRouter, Redirect } from 'react-router
 import { hot } from 'react-hot-loader/root';
 import { setConfig } from 'react-hot-loader';
 
-const Test = lazy(() => import('@containers/test/Test'));
-const NotFound = lazy(() => import('@containers/error/notFound/NotFound'));
+import lazyLoad from './lazyLoad';
+
+import routes from './routes';
 
 const Root = () => {
     return (
         <HashRouter>
-            sssw
             <Suspense fallback={<div>loading</div>}>
                 <Switch>
-                    <Route
-                        path="/"
-                        exact
-                        component={Test}
-                    />
-                    <Route
-                        path="/notfound"
-                        exact
-                        component={NotFound}
-                    />
+                    {
+                        routes.map(route => {
+                            return (
+                                <Route
+                                    key={route.name}
+                                    path={route.path}
+                                    exact
+                                    component={lazyLoad(route)}
+                                    // render={(props) => {
+                                    //     const Comp = lazyLoad(route);
+                                    //     return <Comp {...props} />
+                                    // }}
+                                />
+                            );
+                        })
+                    }
                 </Switch>
             </Suspense>
         </HashRouter>
