@@ -3,7 +3,6 @@ import { Switch, Route, HashRouter, BrowserRouter, Redirect } from 'react-router
 import { hot } from 'react-hot-loader/root';
 import { setConfig } from 'react-hot-loader';
 
-
 import routes from './routes';
 
 const Root = () => {
