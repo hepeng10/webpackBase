@@ -3,7 +3,6 @@ import { Switch, Route, HashRouter, BrowserRouter, Redirect } from 'react-router
 import { hot } from 'react-hot-loader/root';
 import { setConfig } from 'react-hot-loader';
 
-import lazyLoad from './lazyLoad';
 
 import routes from './routes';
 
@@ -19,11 +18,10 @@ const Root = () => {
                                     key={route.name}
                                     path={route.path}
                                     exact
-                                    component={route.component}
-                                    // render={(props) => {
-                                    //     const Comp = lazyLoad(route);
-                                    //     return <Comp {...props} />
-                                    // }}
+                                    // component={route.component}
+                                    render={(props) => {
+                                        return <route.component {...props} />
+                                    }}
                                 />
                             );
                         })
@@ -35,7 +33,7 @@ const Root = () => {
 };
 
 setConfig({
-    trackTailUpdates: false,  // 添加这个配置才能热更新 lazy 组件
+    // trackTailUpdates: false,  // 添加这个配置才能热更新 lazy 组件
     logLevel: 'debug',
     hotHooks: true,
 });

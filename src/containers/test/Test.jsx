@@ -7,19 +7,18 @@ import { Link } from 'react-router-dom';
 
 import { login } from '@services/login';
 
-function slowImport(value, ms = 1000) {
+function slowImport(value, ms = 3000) {
     return new Promise(resolve => {
         setTimeout(() => resolve(value), ms);
     })
 }
-const LazyComp = React.lazy(() => slowImport(import('./Lazy')));
 
 export default class Test extends Component {
     state = {
         a: 1
     };
     componentDidMount() {
-        login();
+        // login();
 
         setInterval(() => {
             this.setState({
@@ -31,10 +30,7 @@ export default class Test extends Component {
         return (
             <div className={styles.container}>
                 <span>{this.state.a}</span>
-                <p>1111</p>
-                <Suspense fallback={<div>loading</div>}>
-                    <LazyComp />
-                </Suspense>
+                <p>1111222</p>
                 <Link to="notfound">to notfound</Link>
             </div>
         );

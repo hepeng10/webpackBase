@@ -13,7 +13,6 @@ module.exports = (api) => {
 
     const plugins = [
         'react-hot-loader/babel',
-        // '@babel/plugin-syntax-dynamic-import',
         [  // antd 按需引入
             'import',
             { libraryName: 'antd', 'libraryDirectory': 'es', style: 'css' }
