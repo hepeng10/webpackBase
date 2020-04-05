@@ -30,7 +30,7 @@ export default class Test extends Component {
         return (
             <div className={styles.container}>
                 <span>{this.state.a}</span>
-                <p>1111222</p>
+                <p>1111</p>
                 <Link to="notfound">to notfound</Link>
             </div>
         );
