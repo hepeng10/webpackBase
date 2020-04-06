@@ -36,6 +36,7 @@ export default {
             '@services': resolve('src/services'),
             '@components': resolve('src/components'),
             '@decorators': resolve('src/decorators'),
+            '@routes': resolve('src/routes'),
         }
     },
     module: {

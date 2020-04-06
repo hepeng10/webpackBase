@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, HashRouter, BrowserRouter, Redirect } from 'react-router-dom';
 import { hot } from 'react-hot-loader/root';
 import { setConfig } from 'react-hot-loader';
+import RouteView from './RouteView';
 
 import routes from './routes';
 
@@ -10,20 +11,7 @@ const Root = () => {
         <HashRouter>
             <Switch>
                 {
-                    routes.map(route => {
-                        const { component: Comp, exact, ...attrs } = route;
-
-                        return (
-                            <Route
-                                key={route.name}
-                                path={route.path}
-                                exact={exact}
-                                render={(props) => {
-                                    return <Comp {...attrs} {...props} />
-                                }}
-                            />
-                        );
-                    })
+                    routes.map(route => <RouteView key={route.path} {...route}/>)
                 }
             </Switch>
         </HashRouter>
@@ -31,7 +19,7 @@ const Root = () => {
 };
 
 setConfig({
-    trackTailUpdates: false,  // 添加这个配置才能热更新 lazy 组件
+    // trackTailUpdates: false,  // 添加这个配置才能热更新 lazy 组件；react-loadable 不用
     logLevel: 'debug',
     hotHooks: true,
 });
