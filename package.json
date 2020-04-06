@@ -2,12 +2,12 @@
   "name": "webpack-base",
   "version": "1.0.0",
   "scripts": {
-    "build": "cross-env ENV=PROD webpack --config webpack.config.prod.babel.js --progress --display-error-details",
-    "build:dev": "cross-env ENV=DEV webpack --config webpack.config.prod.babel.js --progress --display-error-details",
-    "build:test": "cross-env ENV=TEST webpack --config webpack.config.prod.babel.js --progress --display-error-details",
+    "build": "cross-env ENV=PROD webpack --config webpack/webpack.config.prod.babel.js --progress --display-error-details",
+    "build:dev": "cross-env ENV=DEV webpack --config webpack/webpack.config.prod.babel.js --progress --display-error-details",
+    "build:test": "cross-env ENV=TEST webpack --config webpack/webpack.config.prod.babel.js --progress --display-error-details",
     "lint": "eslint -c .eslintrc.prod.json --ext .js,.jsx src/",
-    "start": "cross-env ENV=DEV webpack-dev-server --inline --progress --config webpack.config.dev.babel.js",
-    "start:test": "cross-env ENV=TEST webpack-dev-server --inline --progress --config webpack.config.dev.babel.js",
+    "start": "cross-env ENV=DEV webpack-dev-server --inline --progress --config webpack/webpack.config.dev.babel.js",
+    "start:test": "cross-env ENV=TEST webpack-dev-server --inline --progress --config webpack/webpack.config.dev.babel.js",
     "start:mock": "concurrently \"cross-env NODE_ENV=mock npm start\" \"node ./mock/server.js\""
   },
   "license": "ISC",

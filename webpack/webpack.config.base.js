@@ -9,17 +9,18 @@ const STATIC_PATH = 'static';
 
 const IS_DEV = process.env.ENV !== 'PROD';
 
-function resolve(dir) {
-    return path.join(__dirname, dir);
+// 从项目根目录开始
+export function rootDir(dir) {
+    return path.join(__dirname, '../', dir);
 }
 
 export default {
     entry: {
-        main: ['react-hot-loader/patch', './src/index.jsx'],
+        main: ['react-hot-loader/patch', rootDir('src/index.jsx')],
     },
     output: {
         publicPath: '/',
-        path: path.join(__dirname, 'build'),
+        path: rootDir('build'),
         filename: `${STATIC_PATH}/js/[hash].[name].js`,
         chunkFilename: `${STATIC_PATH}/js/[name].[hash:5].chunk.js`,
     },
@@ -27,23 +28,23 @@ export default {
         extensions: ['.js', '.jsx', '.css', '.less'],
         alias: {
             'react-dom': '@hot-loader/react-dom',
-            '@': resolve('src'),
-            '@config': resolve('src/config'),
-            '@containers': resolve('src/containers'),
-            '@images': resolve('src/images'),
-            '@styles': resolve('src/styles'),
-            '@utils': resolve('src/utils'),
-            '@services': resolve('src/services'),
-            '@components': resolve('src/components'),
-            '@decorators': resolve('src/decorators'),
-            '@routes': resolve('src/routes'),
+            '@': rootDir('src'),
+            '@config': rootDir('src/config'),
+            '@containers': rootDir('src/containers'),
+            '@images': rootDir('src/images'),
+            '@styles': rootDir('src/styles'),
+            '@utils': rootDir('src/utils'),
+            '@services': rootDir('src/services'),
+            '@components': rootDir('src/components'),
+            '@decorators': rootDir('src/decorators'),
+            '@routes': rootDir('src/routes'),
         }
     },
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                include: path.join(__dirname, 'src'),
+                include: rootDir('src'),
                 use: ['babel-loader']
             },
             {
@@ -51,7 +52,7 @@ export default {
                  * 第三方组件的css抽离为独立文件vendor.css
                  */
                 test: /\.css$/,
-                include: path.join(__dirname, 'node_modules'),
+                include: rootDir('node_modules'),
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader'
@@ -62,7 +63,7 @@ export default {
                  * 主项目的css合并到style.css
                  */
                 test: /\.(css|less)$/,
-                include: path.join(__dirname, 'src'),
+                include: rootDir('src'),
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader,
@@ -88,7 +89,7 @@ export default {
                  * 字体加载器
                  */
                 test: /\.(woff|eot|ttf|svg)$/,
-                include: path.join(__dirname, 'src/fonts'),
+                include: rootDir('src/fonts'),
                 use: [{
                     loader: 'url-loader',
                     options: {
@@ -102,7 +103,7 @@ export default {
                  * 图片加载器
                  */
                 test: /\.(png|jpg|jpeg|gif|svg|xlsx)$/,
-                exclude: path.join(__dirname, 'src/fonts'),
+                exclude: rootDir('src/fonts'),
                 use: [{
                     loader: 'url-loader',
                     options: {
@@ -113,7 +114,7 @@ export default {
             },
             {
                 test: /\.ico$/,
-                include: path.join(__dirname, 'src/images'),
+                include: rootDir('src/images'),
                 use: [{
                     loader: 'url-loader',
                     options: {
@@ -124,7 +125,7 @@ export default {
             },
             {
                 test: /\.json$/,
-                include: path.join(__dirname, 'src'),
+                include: rootDir('src'),
                 use: [{
                     loader: 'json-loader'
                 }]
@@ -137,7 +138,7 @@ export default {
         // 主页面入口index.html
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: './src/index.html',
+            template: 'src/index.html',
         }),
         // 抽离CSS。开发的时候不能加 hash 值，加了的话就不能 HMR 了
         new MiniCssExtractPlugin({

@@ -1,8 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import Config from './src/config';
-import baseConfig from './webpack.config.base';
+import Config from '../src/config';
+import baseConfig, { rootDir } from './webpack.config.base';
 
 const env = process.env;
 const LocalServer = {
@@ -49,7 +49,7 @@ export default webpackMerge(baseConfig, {
                  */
                 test: /\.(js|jsx)$/,
                 enforce: 'pre',
-                include: path.join(__dirname, 'src'),
+                include: rootDir('src'),
                 use: [{
                     loader: 'eslint-loader',
                     options: {
@@ -75,7 +75,7 @@ export default webpackMerge(baseConfig, {
         open: true,
         disableHostCheck: true,
         compress: true,     // 开起 gzip 压缩
-        contentBase: path.join(__dirname, 'build'),
+        contentBase: rootDir('build'),
         proxy: devProxy(),  // 代理要和 axios 发起请求的地址进行对应
     }
 });

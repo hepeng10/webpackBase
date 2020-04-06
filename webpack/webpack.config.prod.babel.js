@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import baseConfig from './webpack.config.base';
+import baseConfig, { rootDir } from './webpack.config.base';
 
 export default webpackMerge(baseConfig, {
     mode: 'production',
@@ -13,7 +13,7 @@ export default webpackMerge(baseConfig, {
                  */
                 test: /\.(js|jsx)$/,
                 enforce: 'pre',
-                include: path.join(__dirname, 'src'),
+                include: rootDir('src'),
                 use: [{
                     loader: 'eslint-loader',
                     options: {
