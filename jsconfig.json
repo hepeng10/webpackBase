@@ -1,5 +1,21 @@
 {
     "compilerOptions": {
-        "experimentalDecorators": true
-    }
+        "target": "esnext",
+        "baseUrl": ".",
+        "paths": {
+          "@/*": ["./src/*"],
+          "@config/*": ["./src/config/*"],
+          "@containers/*": ["./src/containers/*"],
+          "@images/*": ["./src/images/*"],
+          "@styles/*": ["./src/styles/*"],
+          "@utils/*": ["./src/utils/*"],
+          "@services/*": ["./src/services/*"],
+          "@components/*": ["./src/components/*"],
+          "@decorators/*": ["./src/decorators/*"],
+          "@routes/*": ["./src/routes/*"],
+          "@hooks/*": ["./src/hooks/*"],
+        }
+    },
+    "exclude": ["node_modules", "webpack", "build"],
+    "include": ["src/**/*"]
 }

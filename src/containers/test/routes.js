@@ -1,9 +1,9 @@
-import loadable from '@utils/loadable';
+import lazy from '@utils/lazy';
 
 export default [
     {
         name: 'testChild',
-        component: loadable(() => import('./child/Child')),
+        component: lazy(() => import('./child/Child')),
         path: '/test/child',
         exact: true,
     }

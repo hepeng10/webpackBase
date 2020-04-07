@@ -1,7 +1,8 @@
 import React from 'react';
-import { Switch, Route, HashRouter, BrowserRouter, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-export default route => {
+// route: { name, path, component, exact } 必须属性
+export const route = route => {
     const { component: Comp, exact, ...attrs } = route;
 
     return (
@@ -15,3 +16,5 @@ export default route => {
         />
     );
 };
+
+export default routes => routes.map(r => route(r));

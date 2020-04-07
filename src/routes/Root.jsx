@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, HashRouter, BrowserRouter, Redirect } from 'react-router-dom';
 import { hot } from 'react-hot-loader/root';
 import { setConfig } from 'react-hot-loader';
-import RouteView from './RouteView';
+import router from './router';
 
 import routes from './routes';
 
@@ -11,7 +11,7 @@ const Root = () => {
         <HashRouter>
             <Switch>
                 {
-                    routes.map(route => <RouteView key={route.path} {...route}/>)
+                    router(routes)
                 }
             </Switch>
         </HashRouter>

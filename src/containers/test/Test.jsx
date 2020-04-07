@@ -1,7 +1,7 @@
 import styles from './style.less';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import RouteView from '@routes/RouteView';
+import router from '@/routes/router';
 
 import { login } from '@services/login';
 
@@ -23,7 +23,7 @@ export default props => {
             </div>
             <div className={styles.right}>
                 {
-                    props.routes.map(route => <RouteView key={route.path} {...route}/>)
+                    router(props.routes)
                 }
             </div>
         </div>
