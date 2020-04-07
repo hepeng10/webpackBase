@@ -1,6 +1,3 @@
-/**
- * Created by Tirion on 2018/9/13.
- */
 import styles from './style.less';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
