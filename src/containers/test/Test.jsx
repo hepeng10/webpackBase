@@ -18,12 +18,12 @@ export default props => {
         <div className={styles.container}>
             <div className={styles.left}>
                 <span>{a}</span>
-                <p>1111</p>
+                <p>222</p>
                 <Link to="/test/child">to child</Link>
             </div>
             <div className={styles.right}>
                 {
-                    props.routes.map(route => <RouteView key={route.name} {...route}/>)
+                    props.routes.map(route => <RouteView key={route.path} {...route}/>)
                 }
             </div>
         </div>

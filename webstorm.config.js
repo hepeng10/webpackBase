@@ -3,7 +3,7 @@
 
 const path = require('path');
 
-function resolve(dir) {
+function rootDir(dir) {
     return path.join(__dirname, dir);
 }
 
@@ -11,13 +11,13 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.css', '.scss'],
         alias: {
-            '@': resolve('src'),
-            '@images': resolve('src/images'),
-            '@styles': resolve('src/styles'),
-            '@utils': resolve('src/utils'),
-            '@services': resolve('src/services'),
-            '@components': resolve('src/components'),
-            '@decorators': resolve('src/decorators'),
+            '@': rootDir('src'),
+            '@images': rootDir('src/images'),
+            '@styles': rootDir('src/styles'),
+            '@utils': rootDir('src/utils'),
+            '@services': rootDir('src/services'),
+            '@components': rootDir('src/components'),
+            '@decorators': rootDir('src/decorators'),
         }
     },
 };
