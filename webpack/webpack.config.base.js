@@ -38,6 +38,7 @@ export default {
             '@components': rootDir('src/components'),
             '@decorators': rootDir('src/decorators'),
             '@routes': rootDir('src/routes'),
+            '@stores': rootDir('src/stores'),
             '@hooks': rootDir('src/hooks'),
         }
     },

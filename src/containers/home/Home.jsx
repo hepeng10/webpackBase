@@ -2,6 +2,8 @@ import styles from './style.less';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import { login } from '@services/login';
+
 export default props => {
     const [a, setA] = useState(1);
 
