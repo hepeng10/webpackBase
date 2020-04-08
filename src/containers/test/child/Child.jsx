@@ -11,14 +11,23 @@ export default observer(props => {
         test.addArr(test.count);
     }, [test.count]);
 
+    const addCount = () => {
+        test.setStore({
+            count: test.count + 1
+        });
+    };
+
     return (
         <div>
-            <p>{test.count}</p>
+            <p>count:{test.count}</p>
+            <p>count2:{test.count2}</p>
+            <hr/>
+            <p>list:</p>
             {
                 test.arr.map(n => <p key={n}>{n}</p>)
             }
             <hr/>
-            <p onClick={test.addCount}>add count</p>
+            <p onClick={addCount}>add count</p>
         </div>
     );
 });

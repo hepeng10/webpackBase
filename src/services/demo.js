@@ -8,9 +8,9 @@ export function login(params) {
     });
 }
 
-export function get(params) {
+export function getXxxList(params) {
     return http({
-        url: 'get',
+        url: 'xxx/getXxx',
         params
     });
 }
