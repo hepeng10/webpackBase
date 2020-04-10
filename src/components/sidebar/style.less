@@ -4,11 +4,8 @@
     height: 100vh;
     background: white;
 
-    a {
-        color: #169FE6;
-    }
-
     .menu {
+        position: relative;
         font-size: 16px;
         line-height: 2;
     }
@@ -22,10 +19,9 @@
     .arrow {
         position: absolute;
         left: 175px;
-        top: 68px;
+        top: 18px;
         width: 10px;
     }
-
     .arrow::before,
     .arrow::after {
         position: absolute;
@@ -36,9 +32,19 @@
         background-color: #333;
         content: '';
     }
-
     .arrow::after {
         transform: rotate(45deg) translateX(-3px);
     }
+    .arrowRight {
+        transform: rotate(-90deg);
+    }
 
+
+    .active1 > a {
+        color: #169FE6;
+    }
+
+    .active2 > a {
+        color: #169FE6;
+    }
 }

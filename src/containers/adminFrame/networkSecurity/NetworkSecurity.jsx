@@ -5,6 +5,6 @@ import React from 'react';
 
 export default () => {
     return (
-        <div>network</div>
+        <div>2222222</div>
     )
 }
