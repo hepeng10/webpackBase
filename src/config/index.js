@@ -8,7 +8,7 @@ const ENV = process.env.ENV;
 export const LocalServer = {
     local: {
         host: '0.0.0.0',
-        port: '9898'
+        port: '8888'
     },
     mock: {
         host: '0.0.0.0',
@@ -23,16 +23,16 @@ export const Server = {
         let url = '';
         switch (ENV) {
             case 'DEV':
-                url = 'http://dev.atom-api.bbdfinance.com';
+                url = 'http://dev.xxx.xxx:8080';
                 break;
             case 'TEST':
-                url = 'http://test.risinger-api.bbdfinance.com:8080';
+                url = 'http://test.xxx.xxx:8080';
                 break;
             case 'PROD':
-                url = 'https://risinger-api.bbdfintech.com/';
+                url = 'https://xxx.xxx.xxx/';
                 break;
             default:
-                url = 'http://dev.risinger-api.bbdfinance.com';
+                url = 'http://dev.xxx.xxx:8080';
         }
         return url;
     })(),

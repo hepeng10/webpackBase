@@ -1,0 +1,44 @@
+.container {
+    float: left;
+    width: 200px;
+    height: 100vh;
+    background: white;
+
+    a {
+        color: #169FE6;
+    }
+
+    .menu {
+        font-size: 16px;
+        line-height: 2;
+    }
+
+    .subMenu {
+        font-size: 12px;
+        text-indent: 40px;
+        line-height: 2;;
+    }
+
+    .arrow {
+        position: absolute;
+        left: 175px;
+        top: 68px;
+        width: 10px;
+    }
+
+    .arrow::before,
+    .arrow::after {
+        position: absolute;
+        width: 8px;
+        height: 1.5px;
+        transform: rotate(-45deg) translateX(3px);
+        border-radius: 2px;
+        background-color: #333;
+        content: '';
+    }
+
+    .arrow::after {
+        transform: rotate(45deg) translateX(-3px);
+    }
+
+}

@@ -15,6 +15,7 @@ export default props => {
         <div className={styles.container}>
             <span>{a}</span>
             <p>222</p>
+            <p><Link to="/admin">to admin</Link></p>
             <p><Link to="/test">to test</Link></p>
             <p><Link to="xxx">to notfound</Link></p>
         </div>

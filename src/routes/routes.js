@@ -2,6 +2,7 @@
 import lazy from '@utils/lazy';
 
 import testRoutes from '../containers/test/routes';
+import adminRoutes from '../containers/adminFrame/routes';
 
 export default [
     {
@@ -9,6 +10,13 @@ export default [
         component: lazy(() => import('../containers/home/Home')),
         path: '/',
         exact: true
+    },
+    {
+        name: 'admin',
+        component: lazy(() => import('../containers/adminFrame/AdminFrame')),
+        path: '/admin',
+        exact: false,
+        routes: adminRoutes,
     },
     {
         name: 'test',
