@@ -5,7 +5,7 @@ import Config from '../config';
 import { HttpMethod, ContentType } from '../constants/enum';
 import { SERVER_ERROR, BROWSER_ERROR } from '../constants/statusCode';
 import { isString, isFormData, isIE, isEmpty, isNotEmpty, isNotBlank, getToken, clearLocalUserInfo } from './util';
-import stores from '../stores';
+import loading from '../stores/loading';
 
 let sourceUrl = '';
 
@@ -347,7 +347,7 @@ Promise.prototype.finally = function(callback) {
 function showLoading(isShow) {
     if (isShow) {
         if (count === 0) {
-            stores.loading.showLoading();
+            loading.showLoading();
         }
         count++;
     }
@@ -357,7 +357,7 @@ function hideLoading(isShow) {
     if (isShow) {
         count--;
         if (count === 0) {
-            stores.loading.hideLoading();
+            loading.hideLoading();
         }
     }
 }
