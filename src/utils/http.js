@@ -13,6 +13,7 @@ let count = 0;  // loading 计数器
 /**
  * @author Stephen Liu
  * @desc 使用axios第三方库访问后台服务器, 返回封装过后的Promise对象.
+ * @param {string} prefix 请求的接口地址前缀, 格式: "/xxx...".
  * @param {string} url 请求的接口地址, 格式: "/xxx...".
  * @param {string} domain 跨域请求的域名地址, 如: http://www.baidu.com
  * @param {object} data 请求的数据, object对象格式.
@@ -49,6 +50,7 @@ export default function http(args) {
     };
 
     let {
+        prefix = '',
         url,
         domain,
         data,
@@ -86,6 +88,22 @@ export default function http(args) {
         return Promise.resolve();
     }
 
+    // 拼接 prefix 和 url => 'prefix/url' || 'url'
+    // 删除 prefix 前面的 /
+    if (prefix && /^\//.test(prefix)) {
+        prefix = prefix.substr(1);
+    }
+    // 添加 prefix 末尾的 /
+    if (prefix && !(/\/$/.test(prefix))) {
+        prefix = `${prefix}/`
+    }
+    // 删除 url 前面的 /
+    if (/^\//.test(url)) {
+        url = url.substr(1);
+    }
+    // 拼接
+    url = `${prefix}${url}`;
+
     // 预处理数据
     if (transformRequest) {
         data = transformRequest.call(options, data);
@@ -106,11 +124,6 @@ export default function http(args) {
 
     if (isNotEmpty(cancel)) {
         cancelToken = new axios.CancelToken(cancel);
-    }
-
-    // 删除 url 前面的 /
-    if (/^\//.test(url)) {
-        url = url.substr(1);
     }
 
     if (isEmpty(getData)) {
