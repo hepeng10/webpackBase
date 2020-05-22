@@ -3,7 +3,7 @@
  */
 import { observable, action, computed } from 'mobx';
 
-import { getXxxList } from '@services/demo';
+import { getXxxList } from '@/services/demo';
 
 class Test {
     @observable count = 111;

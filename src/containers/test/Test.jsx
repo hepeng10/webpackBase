@@ -1,7 +1,7 @@
 import styles from './style.less';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import router from '@routes/router';
+import router from '@/routes/router';
 
 export default props => {
     return (

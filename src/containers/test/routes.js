@@ -1,4 +1,4 @@
-import lazy from '@utils/lazy';
+import lazy from '@/utils/lazy';
 
 export default [
     {

@@ -1,4 +1,4 @@
-import lazy from '@utils/lazy'
+import lazy from '@/utils/lazy'
 
 /**
  * Created by hepeng on 2020/4/10

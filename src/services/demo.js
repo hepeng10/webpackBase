@@ -1,4 +1,4 @@
-import http  from '@utils/http';
+import http  from '@/utils/http';
 import { HttpMethod } from '@/constants/enum';
 
 export function login(params) {
@@ -11,7 +11,7 @@ export function login(params) {
 export function getXxxList(params) {
     return http({
         url: 'xxx/getXxx',
-        params
+        data: params
     });
 }
 
@@ -20,6 +20,6 @@ export function post(params) {
         url: 'post',
         type: HttpMethod.POST,
         enableLoading: true,  // 配置请求时是否显示全局 loading
-        params
+        data: params
     });
 }

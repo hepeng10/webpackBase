@@ -2,7 +2,7 @@ import styles from './style.less';
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
-import useStores from '@hooks/useStores';
+import useStores from '@/hooks/useStores';
 
 export default observer(props => {
     const { test } = useStores();

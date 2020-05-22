@@ -12,12 +12,6 @@ module.exports = {
         extensions: ['.js', '.jsx', '.css', '.scss'],
         alias: {
             '@': rootDir('src'),
-            '@images': rootDir('src/images'),
-            '@styles': rootDir('src/styles'),
-            '@utils': rootDir('src/utils'),
-            '@services': rootDir('src/services'),
-            '@components': rootDir('src/components'),
-            '@decorators': rootDir('src/decorators'),
         }
     },
 };

@@ -49,6 +49,14 @@ export default webpackMerge(baseConfig, {
                         return `npm.${packageName.replace('@', '')}`;
                     },
                 },
+                // 对于通过 MiniCssExtractPlugin 生成的 CSS 文件也可以通过 SplitChunks 来进行抽取公有样式
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true,
+                    priority: 100,
+                }
             },
         },
     },

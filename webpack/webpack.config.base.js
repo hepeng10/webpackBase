@@ -4,8 +4,9 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
-const STATIC_PATH = 'static';
+const DIST_PATH = 'dist';
 
 const IS_DEV = process.env.ENV !== 'PROD';
 
@@ -21,25 +22,14 @@ export default {
     output: {
         publicPath: '/',
         path: rootDir('build'),
-        filename: `${STATIC_PATH}/js/[hash].[name].js`,
-        chunkFilename: `${STATIC_PATH}/js/[name].[hash:5].chunk.js`,
+        filename: `${DIST_PATH}/js/[hash].[name].js`,
+        chunkFilename: `${DIST_PATH}/js/[name].[hash:5].chunk.js`,
     },
     resolve: {
         extensions: ['.js', '.jsx', '.css', '.less'],
         alias: {
             'react-dom': '@hot-loader/react-dom',
             '@': rootDir('src'),
-            '@config': rootDir('src/config'),
-            '@containers': rootDir('src/containers'),
-            '@images': rootDir('src/images'),
-            '@styles': rootDir('src/styles'),
-            '@utils': rootDir('src/utils'),
-            '@services': rootDir('src/services'),
-            '@components': rootDir('src/components'),
-            '@decorators': rootDir('src/decorators'),
-            '@routes': rootDir('src/routes'),
-            '@stores': rootDir('src/stores'),
-            '@hooks': rootDir('src/hooks'),
         }
     },
     module: {
@@ -96,7 +86,7 @@ export default {
                     loader: 'url-loader',
                     options: {
                         limit: 10,
-                        name: `${STATIC_PATH}/fonts/[hash].[ext]`
+                        name: `${DIST_PATH}/fonts/[hash].[ext]`
                     }
                 }]
             },
@@ -110,7 +100,7 @@ export default {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: `${STATIC_PATH}/images/[hash].[ext]`
+                        name: `${DIST_PATH}/images/[hash].[ext]`
                     }
                 }]
             },
@@ -121,7 +111,7 @@ export default {
                     loader: 'url-loader',
                     options: {
                         limit: 10000,
-                        name: `${STATIC_PATH}/images/[name].[ext]`
+                        name: `${DIST_PATH}/images/[name].[ext]`
                     }
                 }]
             },
@@ -144,9 +134,16 @@ export default {
         }),
         // 抽离CSS。开发的时候不能加 hash 值，加了的话就不能 HMR 了
         new MiniCssExtractPlugin({
-            filename: IS_DEV ? `${STATIC_PATH}/css/[name].css` : `${STATIC_PATH}/css/[name].[hash].css`,
-            chunkFilename: IS_DEV ? `${STATIC_PATH}/css/[name].css` : `${STATIC_PATH}/css/[name].[hash].css`
+            filename: IS_DEV ? `${DIST_PATH}/css/[name].css` : `${DIST_PATH}/css/[name].[hash].css`,
+            chunkFilename: IS_DEV ? `${DIST_PATH}/css/[name].css` : `${DIST_PATH}/css/[name].[hash].css`
         }),
+        // 拷贝第三方静态文件目录
+        new CopyWebpackPlugin([
+            {
+                from: rootDir('src/static'),
+                to: rootDir('build/static'),
+            },
+        ]),
         // // 文件大小写检测
         new CaseSensitivePathsPlugin(),
     ]

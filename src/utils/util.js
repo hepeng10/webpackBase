@@ -213,8 +213,8 @@ export function replaceWord(str, replace) {
 /**
  * @qianyun
  * @desc 通过属性值获取到属性名
- * @param {obj}  
- * @param {string}  
+ * @param {obj}
+ * @param {string}
  */
 export function getPropertyName(obj, val) {
     var objKeys = Object.keys(obj);
@@ -258,7 +258,7 @@ export function getURLParam(name) {
 }
 /*
 * 获取 url 参数，因为 this.props.location.query 不能得到带有 # 的参数，所以添加此方法
-* 
+*
 */
 export function getQueryParams() {
     let obj = {}, name, value;
@@ -271,7 +271,7 @@ export function getQueryParams() {
         if (num > 0) {
             name = arr[i].substring(0, num);
             value = arr[i].substr(num + 1);
-            obj[name] = value;
+            obj[name] = decodeURIComponent(value);
         }
     }
     return obj;
