@@ -4,6 +4,9 @@ import webpackMerge from 'webpack-merge';
 import baseConfig, { rootDir } from './webpack.config.base';
 
 export default webpackMerge(baseConfig, {
+    entry: {
+        main: [rootDir('src/index.jsx')],
+    },
     mode: 'production',
     module: {
         rules: [

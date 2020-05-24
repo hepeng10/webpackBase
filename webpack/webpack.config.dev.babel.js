@@ -39,6 +39,10 @@ const devProxy = () => {
 };
 
 export default webpackMerge(baseConfig, {
+    entry: {
+        // react-hot-loader 在打包后 IE 浏览器无法运行，所以只能在开发环境使用 react-hot-loader
+        main: ['react-hot-loader/patch', rootDir('src/index.jsx')],
+    },
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     module: {

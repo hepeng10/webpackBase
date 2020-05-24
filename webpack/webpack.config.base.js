@@ -16,9 +16,6 @@ export function rootDir(dir) {
 }
 
 export default {
-    entry: {
-        main: ['react-hot-loader/patch', rootDir('src/index.jsx')],
-    },
     output: {
         publicPath: '/',
         path: rootDir('build'),
