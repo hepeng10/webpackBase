@@ -63,9 +63,3 @@ export const http = {
     type: HttpMethod.GET,                      // 默认请求方式
     contentType: ContentType.JSON              // API接口请求默认发送的contentType
 };
-
-export default {
-    LocalServer,
-    Server,
-    http
-};

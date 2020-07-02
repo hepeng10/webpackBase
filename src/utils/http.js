@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'querystring';
 import { message } from 'antd';
-import Config from '../config';
+import * as Config from '../config';
 import { HttpMethod, ContentType } from '../constants/enum';
 import { SERVER_ERROR, BROWSER_ERROR } from '../constants/statusCode';
 import { isString, isFormData, isIE, isEmpty, isNotEmpty, isNotBlank, getToken, clearLocalUserInfo } from './util';

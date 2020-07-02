@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackMerge from 'webpack-merge';
-import Config from '../src/config';
+import * as Config from '../src/config';
 import baseConfig, { rootDir } from './webpack.config.base';
 
 const env = process.env;
