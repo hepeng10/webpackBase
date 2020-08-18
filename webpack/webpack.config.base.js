@@ -124,6 +124,11 @@ export default {
     plugins: [
         // 清除编译目录
         new CleanWebpackPlugin(),
+        // cross-evn 设置的变量在浏览器环境中不能通过 process.env.ENV 获取，但是 node 环境能获取到，所以在这里将 node 的 process.env 进行一次赋值操作让浏览器环境也生效
+        // 但是之前却不需要这个操作。。。不知道是不是 Mac 系统的问题。。。
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify(process.env)
+        }),
         // 主页面入口index.html
         new HtmlWebpackPlugin({
             filename: 'index.html',

@@ -225,42 +225,21 @@ export function getPropertyName(obj, val) {
     }
 }
 
-// 获取URL上的参数
-export function getRequest(key) {
-    var url = location.hash.split('?')[1]; // 获取url中'?'符后的字串
-    var reg = new RegExp('(^|&)' + key + '=([^&]*)(&|$)');
-    var result = url.substr().match(reg);
-    return result ? decodeURIComponent(result[2]) : null;
-}
-
-export function getUrlParam(param) {
-    if (location.href.split('?').length <= 1) {
-        return;
-    }
-    let newParam = {};
-    let url = location.href.split('?')[1].split('&');
-    url.forEach((param) => {
-        newParam[param.split('=')[0]] = param.split('=')[1];
-    });
-    return newParam && newParam[param];
-}
-
 /**
- * @desc 通过URL搜索对象获取url参数, 如www.xxx.com?a=1&b=2, getURLParam('a') return 1
+ * @desc 通过URL搜索对象获取url参数, 如www.xxx.com?a=1&b=2, getUrlParam('a') return 1
  */
-export function getURLParam(name) {
+export function getUrlParam(name, isDecode = true) {
     if (isBlank(name)) {
         return;
     }
-    // var urlQuery = getURLQuery();
-    var urlQuery = getQueryParams();
+    var urlQuery = getQueryParams(isDecode);
     return urlQuery[name];
 }
 /*
 * 获取 url 参数，因为 this.props.location.query 不能得到带有 # 的参数，所以添加此方法
 *
 */
-export function getQueryParams() {
+export function getQueryParams(isDecode = true) {
     let obj = {}, name, value;
     let str = location.href;
     let num = str.indexOf('?');
@@ -271,8 +250,42 @@ export function getQueryParams() {
         if (num > 0) {
             name = arr[i].substring(0, num);
             value = arr[i].substr(num + 1);
-            obj[name] = decodeURIComponent(value);
+            obj[name] = isDecode ? decodeURIComponent(value) : value;
         }
     }
     return obj;
+}
+// 修改 url 中的参数，返回修改后的 url
+export function changeUrlParam(key, value, isEncode = true) {
+    const oldValue = getUrlParam(key, false);
+    let href = location.href;
+    return href.replace(oldValue, isEncode ? encodeURIComponent(value) : value);
+}
+
+export function msToHms(msd) {
+    var time = parseFloat(msd) / 1000;
+    if (time) {
+        if (time > 60 && time < 60 * 60) {
+            time = parseInt(time / 60.0, 10) + '分' + parseInt((parseFloat(time / 60.0) -
+                parseInt(time / 60.0, 10)) * 60, 10) + '秒';
+        }
+        else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+            time = parseInt(time / 3600.0, 10) + '小时' + parseInt((parseFloat(time / 3600.0) -
+                parseInt(time / 3600.0, 10)) * 60, 10) + '分' +
+                parseInt((parseFloat((parseFloat(time / 3600.0) - parseInt(time / 3600.0, 10)) * 60) -
+                    parseInt((parseFloat(time / 3600.0) - parseInt(time / 3600.0, 10)) * 60, 10)) * 60, 10) + '秒';
+        }
+        else {
+            time = parseInt(time, 10) + '秒';
+        }
+    }
+    return time;
+}
+
+export function bytesToSize(bytes) {
+    if (bytes === 0) return '0 B';
+    var k = 1024,
+        sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+        i = Math.floor(Math.log(bytes) / Math.log(k));
+    return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
 }
