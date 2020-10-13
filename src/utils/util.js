@@ -226,20 +226,20 @@ export function getPropertyName(obj, val) {
 }
 
 /**
- * @desc 通过URL搜索对象获取url参数, 如www.xxx.com?a=1&b=2, getUrlParam('a') return 1
+ * @desc 通过URL搜索对象获取url参数, 如www.xxx.com?a=1&b=2, getUrlQuery('a') return 1
  */
-export function getUrlParam(name, isDecode = true) {
+export function getUrlQuery(name, isDecode = true) {
     if (isBlank(name)) {
         return;
     }
-    var urlQuery = getQueryParams(isDecode);
+    var urlQuery = getUrlQueries(isDecode);
     return urlQuery[name];
 }
 /*
 * 获取 url 参数，因为 this.props.location.query 不能得到带有 # 的参数，所以添加此方法
 *
 */
-export function getQueryParams(isDecode = true) {
+export function getUrlQueries(isDecode = true) {
     let obj = {}, name, value;
     let str = location.href;
     let num = str.indexOf('?');
@@ -256,8 +256,8 @@ export function getQueryParams(isDecode = true) {
     return obj;
 }
 // 修改 url 中的参数，返回修改后的 url
-export function changeUrlParam(key, value, isEncode = true) {
-    const oldValue = getUrlParam(key, false);
+export function changeUrlQuery(key, value, isEncode = true) {
+    const oldValue = getUrlQuery(key, false);
     let href = location.href;
     return href.replace(oldValue, isEncode ? encodeURIComponent(value) : value);
 }
