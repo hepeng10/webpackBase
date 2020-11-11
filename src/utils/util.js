@@ -256,10 +256,16 @@ export function getUrlQueries(isDecode = true) {
     return obj;
 }
 // 修改 url 中的参数，返回修改后的 url
-export function changeUrlQuery(key, value, isEncode = true) {
+export function changeUrlQueries(href, keyValue, isEncode = true) {
+    Object.keys(keyValue).forEach(k => {
+        href = changeUrlQuery(href, k, keyValue[k], isEncode);
+    });
+    return href;
+}
+export function changeUrlQuery(href, key, value, isEncode = true) {
     const oldValue = getUrlQuery(key, false);
-    let href = location.href;
-    return href.replace(oldValue, isEncode ? encodeURIComponent(value) : value);
+    const newValue = isEncode ? encodeURIComponent(value) : value;
+    return href.replace(`${key}=${oldValue}`, `${key}=${newValue}`);
 }
 
 export function msToHms(msd) {
