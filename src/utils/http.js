@@ -287,8 +287,7 @@ export default function http(args) {
                 hideLoading(enableLoading);
 
                 if (!response) {
-                    if (!error.__CANCEL__) {
-                        log(error);
+                    if (error.message.includes('timeout')) {
                         message.warn('请求超时，请刷新重试');
                     }
                     return;
