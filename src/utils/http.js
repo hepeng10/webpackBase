@@ -289,6 +289,8 @@ export default function http(args) {
                 if (!response) {
                     if (error.message.includes('timeout')) {
                         message.warn('请求超时，请刷新重试');
+                    } else {
+                        message.warn('服务器异常，请稍后重试');
                     }
                     return;
                 }
