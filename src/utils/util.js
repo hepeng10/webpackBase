@@ -288,10 +288,75 @@ export function msToHms(msd) {
     return time;
 }
 
+// 根据文件的比特大小自动转换单位
 export function bytesToSize(bytes) {
     if (bytes === 0) return '0 B';
     var k = 1024,
         sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
         i = Math.floor(Math.log(bytes) / Math.log(k));
     return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+}
+
+/**
+ * @description 数值转换
+ * @param {number | string} v 要转换的内容
+ * @param {boolean} minus 是否允许转换为负数，默认为只转换成正数
+ * @param {number} digits 保留小数位数
+ * @param {boolean} stringify 返回值是否为字符串，主要用户 input 输入框，可以返回 '12.' 这样的内容
+ * @return {number | string} 返回数值时，''和'-'返回0
+ * */
+export function transNum(v, { minus = false, digits = 2, stringify = false } = {}) {
+    let res;
+    if (isNumber(v)) {
+        if (minus) {
+            res = Number(v.toFixed(digits));
+        } else {
+            res = Number(Math.abs(v).toFixed(digits));
+        }
+        res = stringify ? String(res) : res;
+    } else {
+        const reg = /^-?[0-9]*\.?[0-9]*/;
+        res = v.match(reg);
+
+        if (res) {
+            res = res[0];
+        } else {
+            res = '';
+        }
+
+        if (!minus && res.includes('-')) {
+            res = res.substr(1);
+        }
+
+        if (stringify) {
+            const decimal = res.split('.')[1];
+            if (decimal && decimal.length > digits) {
+                res = Number(res).toFixed(digits);
+            }
+        } else {
+            if (res === '' || res === '-') {
+                res = 0;
+            } else {
+                res = Number(Number(res).toFixed(digits));
+            }
+        }
+    }
+    return  res;
+}
+
+// 替换动态路由中的 :xxx 为 obj 中对应 key 的 value 值
+export function replaceRouteParams(route, obj) {
+    return route.replace(/:\w+/g, word => {
+        const key = word.substr(1);
+        return obj[key];
+    });
+}
+
+// 打开链接，解决用户填写的链接不带协议导致打开异常的问题
+export function openUrl(url) {
+    if (/^http/.test(url)) {
+        window.open(url);
+    } else {
+        window.open(`http://${url}`);
+    }
 }
