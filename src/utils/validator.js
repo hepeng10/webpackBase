@@ -26,20 +26,6 @@ export const greaterThan500 = {
     pattern: /([5-9]\d{2}|\d{4,})/
 };
 
-export function checkPwd(rule, value, callback) {
-    this.password2 = value;
-    if (this.password !== this.password2) {
-        this.setState({
-            pwdIsEqual: false
-        });
-    } else {
-        this.setState({
-            pwdIsEqual: true
-        });
-    }
-    callback();
-}
-
 export const LoginName = {
     message: '用户名错误',
     pattern: /^([A-Za-z][A-Za-z_0-9]{2,19}|1\d{10}|([a-zA-Z0-9_\.\-])+([_\.\-])?([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+)$/

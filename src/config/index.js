@@ -1,7 +1,7 @@
 /**
  * @desc 项目配置文件
  */
-import { HttpMethod, ContentType } from '../constants/enum';
+import { HttpMethod, ContentType } from '@/constants/enum';
 
 const ENV = process.env.ENV;
 
