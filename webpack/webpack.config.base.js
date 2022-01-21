@@ -146,7 +146,7 @@ export default {
                 to: rootDir('build/static'),
             },
         ]),
-        // // 文件大小写检测
+        // 文件大小写检测
         new CaseSensitivePathsPlugin(),
     ]
 };

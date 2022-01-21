@@ -108,7 +108,6 @@ export default function http(args) {
         data = transformRequest.call(options, data);
     }
 
-    // type 为 POST 的请求会将参数转化为 formData 传递
     if (type === HttpMethod.POST || type === HttpMethod.PUT || type === HttpMethod.DELETE) {
         postData = data;
         // 根据配置的 contentType 对数据进一步处理
@@ -116,6 +115,14 @@ export default function http(args) {
             if (isNotEmpty(postData) && !isFormData(postData)) {
                 postData = qs.stringify(postData, { allowDots: true });
             }
+        }
+        // formData 提交，文件上传等情况使用
+        if (contentType === ContentType.FORM_DATA) {
+            let data = new FormData();
+            Object.keys(postData).forEach(k => {
+                data.append(k, postData[k]);
+            })
+            postData = data;
         }
     } else {
         getData = data;

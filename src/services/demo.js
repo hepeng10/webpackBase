@@ -23,3 +23,13 @@ export function post(params) {
         data: params
     });
 }
+
+// 文件上传
+export function apiUpload(params) {
+    return http({
+        url: `${API}/admin/uploadImg`,
+        data: params,  // 如：{ file: FIle }
+        type: HttpMethod.POST,
+        contentType: ContentType.FORM_DATA,  // 使用 formData
+    });
+}

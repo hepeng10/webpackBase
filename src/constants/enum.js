@@ -9,7 +9,8 @@ export const HttpMethod = {
 // http协议头Content-Type
 export const ContentType = {
     JSON: 'application/json',
-    FORM_URLENCODED: 'application/x-www-form-urlencoded'
+    FORM_URLENCODED: 'application/x-www-form-urlencoded',
+    FORM_DATA: 'multipart/form-data',
 };
 
 export const Event = {
