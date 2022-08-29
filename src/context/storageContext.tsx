@@ -1,17 +1,34 @@
-import { getCurrentInstance, getLocation, getSystemInfo, setStorageSync } from '@tarojs/taro';
+// createContext 使用 demo
+import {
+  getCurrentInstance,
+  getLocation,
+  getStorageSync,
+  getSystemInfo,
+  setStorage,
+  setStorageSync
+} from '@tarojs/taro';
 import { useEffect, useState } from 'react';
 
+import env from '@/config/index';
 import { getCityList, getTypeList, IcityStruct, IworkTypeStruct } from '@/services/api';
 import { getUserLocation, IlocatParams } from '@/services/login';
-import { envExecute } from '@/utils/utils';
+import { SystemInfo, UserInfo, UserLocation } from '@/types/index';
+import routeTo from '@/utils/routeTo';
+import { codeLogin, envExecute, isLogin } from '@/utils/utils';
 
 import createContext from './createContext';
 
 export type Value = {
   treeWorkTypeList?: IworkTypeStruct[];
-  setTreeWorkTypeList?: (value: IworkTypeStruct[]) => void;
+  setTreeWorkTypeList: (value: IworkTypeStruct[]) => void;
   treeCityList?: IcityStruct[];
-  setTreeCityList?: (value: IcityStruct[]) => void;
+  setTreeCityList: (value: IcityStruct[]) => void;
+  userLocation: Partial<UserLocation>;
+  setUserLocation: (value: UserLocation) => void;
+  systemInfo?: SystemInfo;
+  setSystemInfo: (value: SystemInfo) => void;
+  userInfo: Partial<UserInfo>;
+  setUserInfo: (value: UserInfo) => void;
 };
 
 /*
@@ -19,8 +36,35 @@ export type Value = {
  * 2.通过 context 提供数据供子组件使用
  */
 const StorageContext = createContext<Value>(() => {
-  const [treeWorkTypeList, setTreeWorkTypeList] = useState<IworkTypeStruct[]>();
-  const [treeCityList, setTreeCityList] = useState<IcityStruct[]>();
+  const [treeWorkTypeList, setTreeWorkTypeList] = useState<IworkTypeStruct[]>(
+    getStorageSync('treeWorkTypeList')
+  );
+  const [treeCityList, setTreeCityList] = useState<IcityStruct[]>(getStorageSync('treeCityList'));
+  const [userLocation, setUserLocation] = useState<Partial<UserLocation>>(
+    getStorageSync('userLocation') || {}
+  );
+  const [systemInfo, setSystemInfo] = useState<SystemInfo>(getStorageSync('systemInfo'));
+  const [userInfo, setUserInfo] = useState<Partial<UserInfo>>(getStorageSync('userInfo') || {});
+
+  // 登录
+  const login = () => {
+    codeLogin()
+      .then((res) => {
+        setUserInfo(res as UserInfo);
+      })
+      .catch((err) => {
+        console.log(err, '登录失败');
+        if (err === 10401) {
+          setStorage({
+            key: 'guide',
+            data: 1,
+            success: () => {
+              routeTo({ url: '/pages/personalCenter/pages/login/index', close: false });
+            }
+          });
+        }
+      });
+  };
 
   // 获取城市列表
   const getCity = async () => {
@@ -49,6 +93,7 @@ const StorageContext = createContext<Value>(() => {
   // 获取工种列表
   const getWorkTypeList = async () => {
     let res = await getTypeList();
+
     // 删除其它招工信息
     const delOtherInfo = (list: IworkTypeStruct[]): IworkTypeStruct[] => {
       const other = list.find((item) => item.name === '其他类招工');
@@ -64,8 +109,10 @@ const StorageContext = createContext<Value>(() => {
       }
       return list;
     };
+
     if (res.list && res.list.length > 0) {
       const list = envExecute<IworkTypeStruct[]>({
+        // 头条小程序删除其它招工信息，避免其它招工信息中有违规的招工信息导致审核不通过
         tt() {
           return delOtherInfo(res.list);
         },
@@ -73,6 +120,7 @@ const StorageContext = createContext<Value>(() => {
           return res.list;
         }
       });
+
       // 树形工种数据结构
       setStorageSync('treeWorkTypeList', list);
       setTreeWorkTypeList(list);
@@ -108,30 +156,30 @@ const StorageContext = createContext<Value>(() => {
     getLocation({
       success: async (e) => {
         let payload: IlocatParams = {
-          coordtype: 'wgs84ll',
-          output: 'json',
-          ak: 'vaVH6Ls3Tisndi940ma2keNeGSm0UvH4',
-          location: `${e.latitude},${e.longitude}`
+          key: env.mapKey,
+          location: `${e.longitude.toFixed(6)},${e.latitude.toFixed(2)}`
         };
         let res: any = await getUserLocation(payload);
-        setStorageSync('userLocation', {
-          cityCode: res.result.addressComponent.adcode,
-          address: res.result.formatted_address,
-          province: res.result.addressComponent.province,
-          cityName: res.result.addressComponent.city,
-          district: res.result.addressComponent.district,
-          location: res.location
-        });
+        const data: UserLocation = {
+          cityCode: res.regeocode.addressComponent.adcode,
+          address: res.regeocode.formatted_address,
+          province: res.regeocode.addressComponent.province,
+          cityName: res.regeocode.addressComponent.city,
+          district: res.regeocode.addressComponent.district
+        };
+        setUserLocation(data);
+        setStorageSync('userLocation', data);
       },
       fail: (res) => {
-        setStorageSync('userLocation', {
+        const data: UserLocation = {
           cityCode: 0,
           address: '',
           province: '',
           cityName: '全国',
-          district: '',
-          location: {}
-        });
+          district: ''
+        };
+        setUserLocation(data);
+        setStorageSync('userLocation', data);
       }
     });
   };
@@ -140,20 +188,26 @@ const StorageContext = createContext<Value>(() => {
   const getSysInfo = () => {
     getSystemInfo({
       success: (res) => {
-        let info: any = res;
+        let info: SystemInfo = '';
         if (res.system.toLocaleLowerCase().indexOf('android') !== -1) {
           info = 'android';
         }
         if (res.system.toLocaleLowerCase().indexOf('ios') !== -1) {
           info = 'ios';
         }
-        setStorageSync('sysTemInfo', info);
+        setSystemInfo(info!);
+        setStorageSync('systemInfo', info);
       }
     });
   };
 
   useEffect(() => {
-    console.log('storageContext 获取 storage 数据');
+    console.log('storageContext init');
+
+    if (!isLogin()) {
+      login();
+    }
+
     getCity();
     getWorkTypeList();
     saveInviteCode();
@@ -162,11 +216,17 @@ const StorageContext = createContext<Value>(() => {
   }, []);
 
   return {
+    userInfo,
+    setUserInfo,
     treeWorkTypeList,
     setTreeWorkTypeList,
     treeCityList,
-    setTreeCityList
+    setTreeCityList,
+    userLocation,
+    setUserLocation,
+    systemInfo,
+    setSystemInfo
   };
-}, {});
+});
 
 export default StorageContext;
